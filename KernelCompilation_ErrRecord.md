@@ -1,6 +1,6 @@
  
 
-##mips平台下firmware内核以及Linux 标准内核编译手册
+## mips平台下firmware内核以及Linux 标准内核编译手册
 
 #### 编译目标
 
@@ -71,11 +71,11 @@ Lable "Y" 代表已经编译完成的版本，可以使用软链接方式链接�
 
 使用的clang（编译平台需要指明为mips，需要打补丁，禁止函数内联）
 
-######源代码位置：
+###### 源代码位置：
 
 ```/home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs```
 
-######IR位置：
+###### IR位置：
 
 ```/home/yjq/Fulirong/Tools/cheq/deadline-arm/code/bcfs```
 
@@ -90,7 +90,7 @@ Parse build procedure : ./main.py parse
 Build w/llvm : ./main.py irgen
 ```
 
-####编译文件修改
+#### 编译文件修改
 
 ###### 修改源文件Makefile
 
@@ -100,13 +100,13 @@ Build w/llvm : ./main.py irgen
 
    Set CROSS_COMPILE ```CROSS_COMPILE=mipsel-linux-```
 
-######保证firmware Makefile  文件和kernel Makefile 文件相同，若不同，取firmware Makefile
+###### 保证firmware Makefile  文件和kernel Makefile 文件相同，若不同，取firmware Makefile
 
 ###### 当生成parse.log后，将log文件中的优化级别（-Os）修改为 -O0后再生成中间文件
 
 
 
-####编译错误总结
+#### 编译错误总结
 
 ##### Eddition 2.6.36.4
 
@@ -208,7 +208,7 @@ len)
 
 
 
-####Compile Linux-3.2.02
+#### Compile Linux-3.2.02
 
 ```(1) drivers/media/video/uvc/uvc_status.c:236: fatal error: opening dependency file drivers/media/video/uvc/.uvc_status.o.d: No such file or directory```
 
