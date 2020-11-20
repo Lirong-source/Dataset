@@ -55,11 +55,11 @@ Lable "Y" 代表已经编译完成的版本，可以使用软链接方式链接�
 
 ```yjq@10.14.30.118```
 
-######GCC交叉编译工具链位置
+###### GCC交叉编译工具链位置
 
 ```/opt/brcm ```
 
-######将交叉编译工具链导入到PATH:
+###### 将交叉编译工具链导入到PATH:
 
 ```export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin```
 
