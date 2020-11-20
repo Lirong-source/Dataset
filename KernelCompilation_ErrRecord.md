@@ -154,7 +154,7 @@ arch/mips/include/asm/unaligned.h
  
 
 ``` 
-(4)unsupported inline asm input with type '__be32'
+(4) unsupported inline asm input with type '__be32'
 ```
 
 ```
@@ -176,10 +176,12 @@ len)
  
 
 ``` 
-(5)linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable 3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.
+(5) linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable 3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.
 ```
 
-```cp linux-stable-3.10.f/include/uapi/linux/netfilter/xt_connmark.h linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h```
+```
+cp linux-stable-3.10.f/include/uapi/linux/netfilter/xt_connmark.h linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h
+```
 
 
 
@@ -197,8 +199,8 @@ replacing  `d_alias` member to `d_u.d_alias` should help with that compatibility
 
 
 
- ```(2)  
- linux-stable-3.2.102.f/fs/yaffs2/yaffs_vfs_glue.c:1994: error: implicit declaration of function 'inode_change_ok' [fs/yaffs2/yaffs_vfs_glue.o] Error 1
+ ```
+ (2) linux-stable-3.2.102.f/fs/yaffs2/yaffs_vfs_glue.c:1994: error: implicit declaration of function 'inode_change_ok' [fs/yaffs2/yaffs_vfs_glue.o] Error 1
  ```
 
 ```
