@@ -116,8 +116,7 @@ Build w/llvm : ./main.py irgen
 
 ```修改 obj/linux_stable-2.6.36/.config 设置  **CONFIG_DYNAMIC_DEBUG** is no set```
 
-```
-(2) /mips/include/asm/checksum.h:285:27: error: unsupported inline asm: input 
+```(2) /mips/include/asm/checksum.h:285:27: error: unsupported inline asm: input 
 with type '__be32' (aka 'unsigned int') matching output with type 'unsigned 
 short'
 ```
@@ -150,7 +149,7 @@ arch/mips/include/asm/unaligned.h
 
  
 
-```（4）unsupported inline asm input with type '__be32'```
+```(4)unsupported inline asm input with type '__be32'```
 
 ```
 --- a/arch/mips/include/asm/checksum.h
@@ -170,7 +169,7 @@ len)
 
  
 
-```（5）linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.```
+```(5)linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.```
 
 ```cp linux-stable-3.10.f/include/uapi/linux/netfilter/xt_connmark.h linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h```
 
