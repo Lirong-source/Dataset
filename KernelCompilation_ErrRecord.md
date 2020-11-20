@@ -110,7 +110,9 @@ Build w/llvm : ./main.py irgen
 
 ##### Eddition 2.6.36.4
 
-```(1) silentold config error```
+```
+(1) silentold config error
+```
 
 ```
 修改obj/linux_stable-2.6.36/.config 60行，设置 CONFIG_RAM_SIZE =1024 
@@ -132,7 +134,9 @@ reference: https://www.linux-mips.org/archives/linux-mips/2015-02/msg00032.html
 
  
 
-``` (3) error: "MIPS, but neither __MIPSEB__, nor __MIPSEL__???"```
+``` 
+(3) error: "MIPS, but neither __MIPSEB__, nor __MIPSEL__???"
+```
 
 ```
 出现这个问题的根本原因在于，clang编译时没有识别到编译大端还是小端的文件，因此导致变量没有定义。目前的做法是，把le.h和byteorder.h报错的那句删除，然后在le.h 中强行定义为大端，需要修改以下几个文件。
@@ -149,7 +153,9 @@ arch/mips/include/asm/unaligned.h
 ```
  
 
-``` (4)unsupported inline asm input with type '__be32'```
+``` 
+(4)unsupported inline asm input with type '__be32'
+```
 
 ```
 --- a/arch/mips/include/asm/checksum.h
@@ -181,27 +187,43 @@ len)
 
  ####  Compile Linux-3.2.02
 
-```(1) linux-stable-3.2.102.f/fs/overlayfs/inode.c:71: error: 'struct dentry' has no member named 'd_alias' ```
+```
+(1) linux-stable-3.2.102.f/fs/overlayfs/inode.c:71: error: 'struct dentry' has no member named 'd_alias' 
+```
 
-```replacing  `d_alias` member to `d_u.d_alias` should help with that compatibility problem.```
-
-
-
- ```(2)  linux-stable-3.2.102.f/fs/yaffs2/yaffs_vfs_glue.c:1994: error: implicit declaration of function 'inode_change_ok' [fs/yaffs2/yaffs_vfs_glue.o] Error 1```
-
-```comment yaffs_vfs_glue.o in fs/yaffs2/Makefile ``` 
+```
+replacing  `d_alias` member to `d_u.d_alias` should help with that compatibility problem.
+```
 
 
 
-```(3) linux-stable-3.2.102.f/fs/yaffs2/yaffs_mtdif1.c:182: error: 'MTD_OOB_AUTO' undeclared (first use in this function)```
+ ```(2)  
+ linux-stable-3.2.102.f/fs/yaffs2/yaffs_vfs_glue.c:1994: error: implicit declaration of function 'inode_change_ok' [fs/yaffs2/yaffs_vfs_glue.o] Error 1
+ ```
 
-```In fs/yaffs2/yaffs_mtdif1.c replace MTD_OOB_AUTO to MTD_OPS_AUTO_OOB ```
+```
+comment yaffs_vfs_glue.o in fs/yaffs2/Makefile 
+``` 
 
 
 
-```(4)  from /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/dd-wrt/linux-stable-3.2.102.f/security/apparmor/domain.c:16:  linux-stable-3.2.102.f/include/linux/types.h:23: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'fd_set'```
+```
+(3) linux-stable-3.2.102.f/fs/yaffs2/yaffs_mtdif1.c:182: error: 'MTD_OOB_AUTO' undeclared (first use in this function)
+```
 
-```comment```
+```
+In fs/yaffs2/yaffs_mtdif1.c replace MTD_OOB_AUTO to MTD_OPS_AUTO_OOB 
+```
+
+
+
+```
+(4)  from /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/dd-wrt/linux-stable-3.2.102.f/security/apparmor/domain.c:16:  linux-stable-3.2.102.f/include/linux/types.h:23: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'fd_set'
+```
+
+```
+comment
+```
 
 
 
@@ -211,5 +233,7 @@ len)
 
 #### Compile Linux-3.2.02
 
-```(1) drivers/media/video/uvc/uvc_status.c:236: fatal error: opening dependency file drivers/media/video/uvc/.uvc_status.o.d: No such file or directory```
+```
+(1) drivers/media/video/uvc/uvc_status.c:236: fatal error: opening dependency file drivers/media/video/uvc/.uvc_status.o.d: No such file or directory
+```
 
