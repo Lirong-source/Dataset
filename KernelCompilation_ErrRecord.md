@@ -112,13 +112,14 @@ Build w/llvm : ./main.py irgen
 
 ```(1) silentold config error```
 
-```修改obj/linux_stable-2.6.36/.config 60行，设置 CONFIG_RAM_SIZE =1024 ```
+```
+修改obj/linux_stable-2.6.36/.config 60行，设置 CONFIG_RAM_SIZE =1024 
 
-```修改 obj/linux_stable-2.6.36/.config 设置  **CONFIG_DYNAMIC_DEBUG** is no set```
+修改 obj/linux_stable-2.6.36/.config 设置  **CONFIG_DYNAMIC_DEBUG** is no set
 
-```(2) /mips/include/asm/checksum.h:285:27: error: unsupported inline asm: input 
-with type '__be32' (aka 'unsigned int') matching output with type 'unsigned 
-short'```
+```
+(2) /mips/include/asm/checksum.h:285:27: error: unsupported inline asm: input with type '__be32' (aka 'unsigned int') matching output with type 'unsigned  short'
+```
 
 ```
 arch/mips/include/asm/checksum.h
@@ -132,9 +133,8 @@ reference: https://www.linux-mips.org/archives/linux-mips/2015-02/msg00032.html
 
 ``` (3) error: "MIPS, but neither __MIPSEB__, nor __MIPSEL__???"```
 
+```
 出现这个问题的根本原因在于，clang编译时没有识别到编译大端还是小端的文件，因此导致变量没有定义。目前的做法是，把le.h和byteorder.h报错的那句删除，然后在le.h 中强行定义为大端，需要修改以下几个文件。
-
-
 
 arch/mips/include/asm/byteorder.h 
 
@@ -145,7 +145,7 @@ arch/mips/include/uapi/asm/bitfield.h
 arch/mips/include/uapi/asm/byteorder.h 
 
 arch/mips/include/asm/unaligned.h
-
+```
  
 
 ``` (4)unsupported inline asm input with type '__be32'```
@@ -168,7 +168,9 @@ len)
 
  
 
-``` (5)linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.```
+``` 
+(5)linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable 3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.
+```
 
 ```cp linux-stable-3.10.f/include/uapi/linux/netfilter/xt_connmark.h linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h```
 
