@@ -116,6 +116,7 @@ Build w/llvm : ./main.py irgen
 修改obj/linux_stable-2.6.36/.config 60行，设置 CONFIG_RAM_SIZE =1024 
 
 修改 obj/linux_stable-2.6.36/.config 设置  **CONFIG_DYNAMIC_DEBUG** is no set
+```
 
 ```
 (2) /mips/include/asm/checksum.h:285:27: error: unsupported inline asm: input with type '__be32' (aka 'unsigned int') matching output with type 'unsigned  short'
