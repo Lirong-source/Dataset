@@ -118,8 +118,7 @@ Build w/llvm : ./main.py irgen
 
 ```(2) /mips/include/asm/checksum.h:285:27: error: unsupported inline asm: input 
 with type '__be32' (aka 'unsigned int') matching output with type 'unsigned 
-short'
-```
+short'```
 
 ```
 arch/mips/include/asm/checksum.h
@@ -131,7 +130,7 @@ reference: https://www.linux-mips.org/archives/linux-mips/2015-02/msg00032.html
 
  
 
-```(3) error: "MIPS, but neither __MIPSEB__, nor __MIPSEL__???"```
+``` (3) error: "MIPS, but neither __MIPSEB__, nor __MIPSEL__???"```
 
 出现这个问题的根本原因在于，clang编译时没有识别到编译大端还是小端的文件，因此导致变量没有定义。目前的做法是，把le.h和byteorder.h报错的那句删除，然后在le.h 中强行定义为大端，需要修改以下几个文件。
 
@@ -149,7 +148,7 @@ arch/mips/include/asm/unaligned.h
 
  
 
-```(4)unsupported inline asm input with type '__be32'```
+``` (4)unsupported inline asm input with type '__be32'```
 
 ```
 --- a/arch/mips/include/asm/checksum.h
@@ -169,7 +168,7 @@ len)
 
  
 
-```(5)linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.```
+``` (5)linux-stable-3.10.f/scripts/Makefile.headersinst:55: *** Missing UAPI file /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h. Stop.```
 
 ```cp linux-stable-3.10.f/include/uapi/linux/netfilter/xt_connmark.h linux-stable-3.10.f/include/uapi/linux/netfilter/xt_CONNMARK.h```
 
@@ -177,7 +176,7 @@ len)
 
 
 
- #### Compile Linux-3.2.02
+ ####  Compile Linux-3.2.02
 
 ```(1) linux-stable-3.2.102.f/fs/overlayfs/inode.c:71: error: 'struct dentry' has no member named 'd_alias' ```
 
@@ -199,7 +198,7 @@ len)
 
 ```(4)  from /home/yjq/Fulirong/Tools/cheq/deadline-arm/code/srcs/dd-wrt/linux-stable-3.2.102.f/security/apparmor/domain.c:16:  linux-stable-3.2.102.f/include/linux/types.h:23: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'fd_set'```
 
-``````comment```
+```comment```
 
 
 
