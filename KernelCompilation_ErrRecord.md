@@ -63,7 +63,7 @@ Lable "Y" 代表已经编译完成的版本，可以使用软链接方式链接�
 
 ```export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin```
 
-```export LD_LIBRARY_PATH=/opt/brcm/hnel-linux/lib:$LD_LIBRARY_PATH```
+```export LD_LIBRARY_PATH=/opt/brcm/hndtools-mipsel-linux/lib:$LD_LIBRARY_PATH```
 
 ###### clang交叉编译工具链位置
 
@@ -239,3 +239,338 @@ comment
 (1) drivers/media/video/uvc/uvc_status.c:236: fatal error: opening dependency file drivers/media/video/uvc/.uvc_status.o.d: No such file or directory
 ```
 
+
+#### Eddition 2.6.30 (Netgear-VER_01.00.24-linux-2.6.30)
+
+```
+(1)  cc1: warnings being treated as errors
+[arch/mips/math-emu/cplemu.o] Error 1
+```
+
+```
+comment
+EXTRA_CFLAGS += -Werror
+in arch/mips/math-emu/Makefile
+```
+
+```
+(2)  Can't use 'defined(@array)' (Mabye you should just omit the defined()?) at kernel/timeconst.pl line 373
+```
+
+```
+omit the defined(), only keep @array
+```
+
+```
+(3)  No rule to make target '/home/yjq/Fulirong/Tools/cheq/deadline-arm/code/objs/linux-stable-2.6.30.k/firmware/cis/', needed by 'firmware/cis/LA-PCM.cis.gen.S'. 
+And other similiar firmware/*** 
+```
+
+```
+comment in firmware/Makefile
+```
+
+```
+(4)  arch/mips/lib/delay.c: 54: error: 'us' undeclared
+```
+
+```
+change us to ns in arch/mips/lib/delay.c line 54
+```
+
+```
+(5)  [preparebrcmdriver] Error 2
+```
+
+```
+Error when use firmware's Makefile for linux kernel. preparebrcmdriver only needed by firmware, so comment.
+```
+
+```
+(6) IRgen
+ include/sound/soc-dai.h:224:25: error: member of anonyous union redeclares 'codec'
+ 'unused'
+```
+
+```
+Redeclare indeed. rename the codec in the union to p_codec, in include/sound/soc-dai.h line 224.
+其他redeclare in union问题也类似解决
+```
+
+```
+(7) IRgen
+ crypto/testmgr.c:1234:9: error: fields must have a constant size: 'variable length array in structure' extension will never be supported.
+```
+
+```
+!UNSOLVED! 
+indeed variable length array.
+```
+
+```
+(8) IRgen
+ fs/proc/kcore.c:163:16: error: use of undeclared identifier 'ELF_DATA' 'SPSTR' 'DPSTR'
+
+```
+
+```
+ELF_DATA is defined in arch/mips/include/asm/elf.h, only defined either for MIPSEB or MIPSEL. 
+使用大端的设置，copy到#else情况下。
+类似: SPSTR DPSTR arch/mips/math-emu/ieee754.c 没有#else的设置
+```
+
+```
+(9) Firmware config
+ symbol value '' invalid for BCM_SVHED_RT_PERIOD
+```
+
+```
+allyesconfig没有设置firmware一些必须的设置项，手动修改.config文件设置为1
+```
+
+```
+(10) Firmware build
+ arch/mips/bcm963xx/irq.c: error bcm_map_part.h: no such file or directory
+```
+
+```
+comment bcm963xx
+```
+
+```
+(11) Firmware build
+ kernel/sched.c: error: implicit declaration of function ...
+```
+
+```
+comment sched.o
+```
+
+```
+(12) Assembler messages:
+ Error: Branch out of range
+```
+
+```
+comment
+```
+
+```
+(13) crypto/vmac.c: error: dereferencing pointer to incomplete type
+```
+
+```
+comment vmac.o 
+```
+
+```
+(14) crypto/xor.c: error: '__GFP_NOTRACK' undeclared 
+```
+
+```
+comment xor.o
+```
+
+```
+(15) conflict function 'async_trigger_callback'
+```
+
+```
+comment
+indeed different declaration async_trigger_callback from kernel.
+```
+
+```
+(16) drivers/mtd/brcmnand/brcmnand_base.c: error: 'NAND_REG_BASE' undeclared
+```
+
+```
+comment brcmnand. only exist in firmware, not exist in kernel.
+```
+
+```
+(17) Permission not able to create /modules.order
+```
+
+```
+!!!UNSOLVED!!!
+No vmlinux, but have *.o
+```
+
+#### Eddition 4.9.198 (dd-wrt-universal-linux-4.9.198)  
+
+```
+(1) Firmware config
+drivers/net/wireless/Kconfig:32: can't open file "drivers/net/wireless/rt3352/rt2860v2_ap/Kconfig"
+```
+
+```
+comment line 32 in drivers/net/wireless/Kconfig
+```
+
+```
+(2) Firmware build
+kernel/crashlog.c:151: error: 'struct module' has no member named 'module_core' ...
+```
+
+```
+comment line 151,152 in kernel/crashlog.c
+```
+
+```
+(3) fs/squashfs-dd/inode.c:1041 ... : error: 'struct squashfs_super_block' has no member named 'bytes_used_2'
+```
+
+```
+comment inode.o in Makefile
+```
+
+```
+(4) security/apparmor/apparmorfs.c:103:error: too many arguments to function 'kvmalloc'
+```
+
+```
+Frimware的kernel/mm.h中定义了有2个参数的kvmalloc函数，原linux kernel的mm.h中没有该函数。
+Firmware的apparmor.h中和原linux kernel中有相同的一个参数的kvmalloc定义。
+Firmware中的调用都是两个参数的。
+因此将Firmware的security/apparmor/include/apparmor.h中的kvmalloc定义注释掉。
+```
+
+```
+(5) drivers/leds/trigger/ledtrig-morse.c:34: leds.h: No such file or directory
+```
+
+```
+存在drivers/leds/leds.h，复制到drivers/leds/trigger/目录下
+```
+
+```
+(6) drivers/mmc/host/mtk-mmc/sd.c:34: error: 'HOST_MAX_MCLK' undeclared ...
+896：error: implicit declaration of function 'mmc_suspend_host'
+```
+
+```
+sd.c中，HOST_MAX_MCLK是有条件#define的，在#else中也define以下。
+hclks也相同。
+注释了896和918行
+```
+
+```
+(7) drivers/usb/dwc3/gadget.c:3171: error: too few arguments to function 'dwc3_gadget_run_stop'
+```
+
+```
+dwc3_gadget_run_stop应用3个参数，3171行和3174行只有两个，根据其他位置的调用，添加第3个参数false
+```
+
+```
+(8) drivers/usb/dwc3/gadget.c:3171: error: implicitdeclaration of function 'AL_REG_FIELD_GET'
+```
+
+```
+AL_REG_FIELD_GET在arch/arm/mach-alpine/include/al_hal/al_hal_reg_utils.h中有定义，copy到drivers/usb/dwc3目录下
+```
+
+```
+(9) multiple definition of 'crc8'
+```
+
+```
+!!!UNSOLVED!!!
+没能编译出vmlinux.o 但是其他*.o存在
+```
+
+#### Eddition 4.4.198 (dd-wrt-universal-linux-4.4.198)  
+```
+(1) Firmware build
+lib/mpi/generic_mpih-mul1.c:50:24: error: invalid use of a cast in a inline asm context requiring an l-value: remove the cast or build with -fheinous-gnu-extensions
+                umul_ppmm(prod_high, prod_low, s1_ptr[j], s2_limb);
+
+invalid output constraint '=h' in asm
+```
+
+```
+原因：lib/mpi/longlong.h
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61146
+
+把cast和=h都去掉了
+```
+
+```
+(2)
+lib/test_static_keys.c:105:16: error: function definition is not allowed here
+lib/test_static_keys.c:105:16: error: use of undeclared identifier 'func'
+```
+
+```
+原因：宏定义中定义了函数声明
+去掉函数声明，将lib/test_static_keys.c:105处的宏定义内容改成(branch(key))
+```
+
+```
+(3)
+net/ipv6/ip6_gre.c:455: error: invalid storage class for function 'ip6gre_rcv'
+```
+
+```
+原因：少了一个{
+net/ipv6/ip6_gre.c line 394
+```
+
+```
+(4)
+net/sched/sch_esfq.c:665: error: implicit declaration of function 'NLA_PUT'
+```
+
+```
+https://github.com/spotify/linux/blob/master/include/net/netlink.h
+NLA_PUT在<net/netlink.h>中
+添加头文件 #include <net/netlink.h>
+```
+
+```
+(5)
+net/sched/sch_esfq.c:475: error: implicit declaration of function 'net_random'
+```
+
+```
+https://lore.kernel.org/patchwork/patch/348494/
+rename net_random() to prandom_u32()
+```
+
+#### Eddition 2.4.20 (timato-csdn-linux-2.4.20)  
+```
+(1) Firmware config
+No rule to make target 'Rules.make'
+No rule to make target 'allyesconfig'
+```
+
+```
+原因：2.4内核没有直接allyesconfig选项，只有menuconfig选项
+待解决
+```
+
+#### Eddition 2.4.20 (tomato-csdn-linux-2.4.20)  
+```
+(1) Firmware config
+No rule to make target 'Rules.make'
+No rule to make target 'allyesconfig'
+```
+
+```
+原因：2.4内核没有直接allyesconfig选项，只有menuconfig选项
+待解决
+```
+
+#### Eddition 4.19.37 (dd-wrt-universal-linux-4.19.37)  
+```
+(1) Firmware build (gcc-4.4.7)
+FATAL: -march mismatch. RSDK is configured for -mips32r2 only
+FATAL: -march mismatch. RSDK is configured for -mips32r2 only
+make[3]: *** [kernel/bounds.s] Error 1
+make[2]: *** [prepare0] Error 2
+```
+
+```
+待解决
+```
