@@ -63,7 +63,7 @@ Lable "Y" 代表已经编译完成的版本，可以使用软链接方式链接�
 
 ```export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin```
 
-```export LD_LIBRARY_PATH=/opt/brcm/hnel-linux/lib:$LD_LIBRARY_PATH```
+```export LD_LIBRARY_PATH=/opt/brcm/hndtools-mipsel-linux/lib:$LD_LIBRARY_PATH```
 
 ###### clang交叉编译工具链位置
 
@@ -478,4 +478,99 @@ AL_REG_FIELD_GET在arch/arm/mach-alpine/include/al_hal/al_hal_reg_utils.h中有�
 ```
 !!!UNSOLVED!!!
 没能编译出vmlinux.o 但是其他*.o存在
+```
+
+#### Eddition 4.4.198 (dd-wrt-universal-linux-4.4.198)  
+```
+(1) Firmware build
+lib/mpi/generic_mpih-mul1.c:50:24: error: invalid use of a cast in a inline asm context requiring an l-value: remove the cast or build with -fheinous-gnu-extensions
+                umul_ppmm(prod_high, prod_low, s1_ptr[j], s2_limb);
+
+invalid output constraint '=h' in asm
+```
+
+```
+原因：lib/mpi/longlong.h
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61146
+
+把cast和=h都去掉了
+```
+
+```
+(2)
+lib/test_static_keys.c:105:16: error: function definition is not allowed here
+lib/test_static_keys.c:105:16: error: use of undeclared identifier 'func'
+```
+
+```
+原因：宏定义中定义了函数声明
+去掉函数声明，将lib/test_static_keys.c:105处的宏定义内容改成(branch(key))
+```
+
+```
+(3)
+net/ipv6/ip6_gre.c:455: error: invalid storage class for function 'ip6gre_rcv'
+```
+
+```
+原因：少了一个{
+net/ipv6/ip6_gre.c line 394
+```
+
+```
+(4)
+net/sched/sch_esfq.c:665: error: implicit declaration of function 'NLA_PUT'
+```
+
+```
+https://github.com/spotify/linux/blob/master/include/net/netlink.h
+NLA_PUT在<net/netlink.h>中
+添加头文件 #include <net/netlink.h>
+```
+
+```
+(5)
+net/sched/sch_esfq.c:475: error: implicit declaration of function 'net_random'
+```
+
+```
+https://lore.kernel.org/patchwork/patch/348494/
+rename net_random() to prandom_u32()
+```
+
+#### Eddition 2.4.20 (timato-csdn-linux-2.4.20)  
+```
+(1) Firmware config
+No rule to make target 'Rules.make'
+No rule to make target 'allyesconfig'
+```
+
+```
+原因：2.4内核没有直接allyesconfig选项，只有menuconfig选项
+待解决
+```
+
+#### Eddition 2.4.20 (tomato-csdn-linux-2.4.20)  
+```
+(1) Firmware config
+No rule to make target 'Rules.make'
+No rule to make target 'allyesconfig'
+```
+
+```
+原因：2.4内核没有直接allyesconfig选项，只有menuconfig选项
+待解决
+```
+
+#### Eddition 4.19.37 (dd-wrt-universal-linux-4.19.37)  
+```
+(1) Firmware build (gcc-4.4.7)
+FATAL: -march mismatch. RSDK is configured for -mips32r2 only
+FATAL: -march mismatch. RSDK is configured for -mips32r2 only
+make[3]: *** [kernel/bounds.s] Error 1
+make[2]: *** [prepare0] Error 2
+```
+
+```
+待解决
 ```
